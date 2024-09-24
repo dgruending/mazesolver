@@ -9,18 +9,31 @@ class Cell():
         self.has_down_wall = True
         self._top_left_point = top_left_point
         self._bottom_right_point =bottom_right_point
+        self._visited = False
         self._win = window
 
     def draw(self, fill_color = "black"):
-        print("Draw for ", self)
-        if self.has_left_wall:
-            self._win.draw_line(Line(self._top_left_point, Point(self._top_left_point.x, self._bottom_right_point.y)), fill_color)
-        if self.has_right_wall:
-            self._win.draw_line(Line(Point(self._bottom_right_point.x, self._top_left_point.y), self._bottom_right_point), fill_color)
-        if self.has_top_wall:
-            self._win.draw_line(Line(self._top_left_point, Point(self._bottom_right_point.x, self._top_left_point.y)), fill_color)
-        if self.has_down_wall:
-            self._win.draw_line(Line(Point(self._top_left_point.x, self._bottom_right_point.y), self._bottom_right_point), fill_color)
+        if self._win is None:
+            return
+        wall_color = fill_color
+        if not self.has_left_wall:
+            wall_color = "white"
+        self._win.draw_line(Line(self._top_left_point, Point(self._top_left_point.x, self._bottom_right_point.y)), wall_color)
+        
+        wall_color = fill_color
+        if not self.has_right_wall:
+            wall_color = "white"
+        self._win.draw_line(Line(Point(self._bottom_right_point.x, self._top_left_point.y), self._bottom_right_point), wall_color)
+        
+        wall_color = fill_color
+        if not self.has_top_wall:
+            wall_color = "white"
+        self._win.draw_line(Line(self._top_left_point, Point(self._bottom_right_point.x, self._top_left_point.y)), wall_color)
+
+        wall_color = fill_color
+        if not self.has_down_wall:
+            wall_color = "white"
+        self._win.draw_line(Line(Point(self._top_left_point.x, self._bottom_right_point.y), self._bottom_right_point), wall_color)
 
     def center(self):
         center = Point((self._top_left_point.x + self._bottom_right_point.x) / 2, (self._top_left_point.y + self._bottom_right_point.y) / 2)
